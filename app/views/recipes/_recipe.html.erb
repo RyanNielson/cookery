@@ -1,0 +1,36 @@
+<div id="<%= dom_id recipe %>" class="w-full sm:w-auto my-5 space-y-5">
+  <div>
+    <strong class="block font-medium mb-1">Name:</strong>
+    <%= recipe.name %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Description:</strong>
+    <%= recipe.description %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Ingredients:</strong>
+    <% if recipe.ingredients.any? %>
+      <ul class="list-disc ml-6 space-y-1">
+        <% recipe.ingredients.each do |ingredient| %>
+          <li>
+            <%= [ingredient.quantity, ingredient.unit, ingredient.name].compact_blank.join(" ") %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p class="text-sm text-gray-600">No ingredients yet.</p>
+    <% end %>
+  </div>
+  <div>
+    <strong class="block font-medium mb-1">Instructions:</strong>
+    <% if recipe.instructions.any? %>
+      <ol class="list-decimal ml-6 space-y-1">
+        <% recipe.instructions.each do |instruction| %>
+          <li><%= instruction.body %></li>
+        <% end %>
+      </ol>
+    <% else %>
+      <p class="text-sm text-gray-600">No instructions yet.</p>
+    <% end %>
+  </div>
+</div>

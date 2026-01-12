@@ -1,0 +1,105 @@
+<%= form_with(model: recipe, class: "contents") do |form| %>
+  <% if recipe.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-md mt-3">
+      <h2><%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+
+      <ul class="list-disc ml-6">
+        <% recipe.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="my-5">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": recipe.errors[:name].none?, "border-red-400 focus:outline-red-600": recipe.errors[:name].any?}] %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :description %>
+    <%= form.textarea :description, rows: 4, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": recipe.errors[:description].none?, "border-red-400 focus:outline-red-600": recipe.errors[:description].any?}] %>
+  </div>
+
+  <div class="my-5" data-controller="nested-fields">
+    <h2 class="font-semibold text-lg mb-2">Ingredients</h2>
+    <div data-nested-fields-target="ingredients">
+      <%= form.fields_for :ingredients do |ingredient_fields| %>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
+          <div>
+            <%= ingredient_fields.label :name %>
+            <%= ingredient_fields.text_field :name, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": ingredient_fields.object.errors[:name].none?, "border-red-400 focus:outline-red-600": ingredient_fields.object.errors[:name].any?}] %>
+          </div>
+          <div>
+            <%= ingredient_fields.label :quantity %>
+            <%= ingredient_fields.text_field :quantity, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": ingredient_fields.object.errors[:quantity].none?, "border-red-400 focus:outline-red-600": ingredient_fields.object.errors[:quantity].any?}] %>
+          </div>
+          <div>
+            <%= ingredient_fields.label :unit %>
+            <%= ingredient_fields.text_field :unit, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": ingredient_fields.object.errors[:unit].none?, "border-red-400 focus:outline-red-600": ingredient_fields.object.errors[:unit].any?}] %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <button type="button" class="mt-2 rounded-md px-3 py-2 bg-gray-100 hover:bg-gray-50" data-action="nested-fields#addIngredient">Add ingredient</button>
+
+    <template data-nested-fields-target="ingredientTemplate">
+      <%= form.fields_for :ingredients, Ingredient.new, child_index: "NEW_RECORD" do |ingredient_fields| %>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 mb-3">
+          <div>
+            <%= ingredient_fields.label :name %>
+            <%= ingredient_fields.text_field :name, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full" %>
+          </div>
+          <div>
+            <%= ingredient_fields.label :quantity %>
+            <%= ingredient_fields.text_field :quantity, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full" %>
+          </div>
+          <div>
+            <%= ingredient_fields.label :unit %>
+            <%= ingredient_fields.text_field :unit, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full" %>
+          </div>
+        </div>
+      <% end %>
+    </template>
+
+    <h2 class="font-semibold text-lg mt-6 mb-2">Instructions</h2>
+    <div data-nested-fields-target="instructions">
+      <%= form.fields_for :instructions do |instruction_fields| %>
+        <div class="mb-3">
+          <div class="flex gap-2 items-end">
+            <div class="w-24">
+              <%= instruction_fields.label :position, "Step" %>
+              <%= instruction_fields.number_field :position, min: 1, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": instruction_fields.object.errors[:position].none?, "border-red-400 focus:outline-red-600": instruction_fields.object.errors[:position].any?}] %>
+            </div>
+            <div class="flex-1">
+              <%= instruction_fields.label :body, "Instruction" %>
+              <%= instruction_fields.text_area :body, rows: 2, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": instruction_fields.object.errors[:body].none?, "border-red-400 focus:outline-red-600": instruction_fields.object.errors[:body].any?}] %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <button type="button" class="mt-2 rounded-md px-3 py-2 bg-gray-100 hover:bg-gray-50" data-action="nested-fields#addInstruction">Add instruction</button>
+
+    <template data-nested-fields-target="instructionTemplate">
+      <%= form.fields_for :instructions, Instruction.new, child_index: "NEW_RECORD" do |instruction_fields| %>
+        <div class="mb-3">
+          <div class="flex gap-2 items-end">
+            <div class="w-24">
+              <%= instruction_fields.label :position, "Step" %>
+              <%= instruction_fields.number_field :position, min: 1, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full" %>
+            </div>
+            <div class="flex-1">
+              <%= instruction_fields.label :body, "Instruction" %>
+              <%= instruction_fields.text_area :body, rows: 2, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </template>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "w-full sm:w-auto rounded-md px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+  </div>
+<% end %>

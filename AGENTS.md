@@ -20,6 +20,7 @@
 - Files and methods: `snake_case`; classes and modules: `CamelCase`.
 - View partials use a leading underscore, e.g. `app/views/shared/_flash.html.erb`.
 - Migrations use timestamped names, e.g. `db/migrate/20260111033949_create_users.rb`.
+- Tailwind should be used for all styling.
 
 ## Testing Guidelines
 - Tests are Minitest-based in `test/` with fixtures in `test/fixtures`.
