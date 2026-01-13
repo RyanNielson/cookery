@@ -3,6 +3,8 @@
   <% ok_border = "border-slate-200/80 focus:border-[#ff7a59] focus:ring-[#ffb49b]/60 dark:border-slate-700/80 dark:focus:ring-[#ff7a59]/40" %>
   <% error_border = "border-rose-400 focus:border-rose-500 focus:ring-rose-200 dark:border-rose-400/80 dark:focus:ring-rose-400/40" %>
 
+  <% units = %w[clove cup g kg l lb ml oz piece pinch tbsp tsp] %>
+
   <% if recipe.errors.any? %>
     <div id="error_explanation" class="rounded-2xl border border-rose-200 bg-rose-50/90 px-4 py-3 text-sm font-semibold text-rose-700">
       <h2><%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
@@ -60,9 +62,9 @@
           <div class="shrink-0">
             <%= ingredient_fields.label :quantity, "Amount", class: "text-sm font-semibold text-slate-700 dark:text-slate-200" %>
             <%= ingredient_fields.label :unit, class: "sr-only" %>
-            <div class="mt-2 flex">
-              <%= ingredient_fields.text_field :quantity, placeholder: "Qty", class: "#{input_base} #{ingredient_fields.object.errors[:quantity].any? ? error_border : ok_border} rounded-r-none focus:z-10 w-16" %>
-              <%= ingredient_fields.text_field :unit, placeholder: "Unit", class: "#{input_base} #{ingredient_fields.object.errors[:unit].any? ? error_border : ok_border} rounded-l-none -ml-px focus:z-10 w-20" %>
+            <div class="mt-2 flex items-stretch">
+              <%= ingredient_fields.text_field :quantity, placeholder: "Qty", class: "#{input_base} #{ingredient_fields.object.errors[:quantity].any? ? error_border : ok_border} w-16 rounded-r-none" %>
+              <%= ingredient_fields.select :unit, options_for_select(units, ingredient_fields.object.unit), { include_blank: "Unit" }, class: "#{input_base} #{ingredient_fields.object.errors[:unit].any? ? error_border : ok_border} w-24 rounded-l-none -ml-px" %>
             </div>
           </div>
         </div>
@@ -80,9 +82,9 @@
           <div class="shrink-0">
             <%= ingredient_fields.label :quantity, "Amount", class: "text-sm font-semibold text-slate-700 dark:text-slate-200" %>
             <%= ingredient_fields.label :unit, class: "sr-only" %>
-            <div class="mt-2 flex">
-              <%= ingredient_fields.text_field :quantity, placeholder: "Qty", class: "#{input_base} #{ok_border} rounded-r-none focus:z-10 w-16" %>
-              <%= ingredient_fields.text_field :unit, placeholder: "Unit", class: "#{input_base} #{ok_border} rounded-l-none -ml-px focus:z-10 w-20" %>
+            <div class="mt-2 flex items-stretch">
+              <%= ingredient_fields.text_field :quantity, placeholder: "Qty", class: "#{input_base} #{ok_border} w-16 rounded-r-none" %>
+              <%= ingredient_fields.select :unit, options_for_select(units), { include_blank: "Unit" }, class: "#{input_base} #{ok_border} w-24 rounded-l-none -ml-px" %>
             </div>
           </div>
         </div>
