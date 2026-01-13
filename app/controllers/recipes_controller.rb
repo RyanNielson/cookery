@@ -32,6 +32,8 @@ class RecipesController < ApplicationController
 
   # PATCH/PUT /recipes/1
   def update
+    purge_image if params.dig(:recipe, :remove_image) == "1"
+
     if @recipe.update(recipe_params)
       redirect_to @recipe, notice: "Recipe was successfully updated.", status: :see_other
     else
@@ -57,11 +59,18 @@ class RecipesController < ApplicationController
         recipe: [
           :name,
           :description,
+          :image,
           {
             ingredients_attributes: [ %i[id name quantity unit _destroy] ],
             instructions_attributes: [ %i[id position body _destroy] ]
           }
         ]
       )
+    end
+
+    def purge_image
+      return unless @recipe.image.attached?
+
+      @recipe.image.purge_later
     end
 end

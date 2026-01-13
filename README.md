@@ -8,6 +8,7 @@ Things you may want to cover:
 * Ruby version
 
 * System dependencies
+  * Image processing for Active Storage variants: `brew install vips libheif`
 
 * Configuration
 
