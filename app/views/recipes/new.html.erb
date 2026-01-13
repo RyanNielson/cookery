@@ -1,9 +1,15 @@
 <% content_for :title, "New recipe" %>
 
-<div class="md:w-2/3 w-full">
-  <h1 class="font-bold text-4xl">New recipe</h1>
+<div class="w-full space-y-8">
+  <div>
+    <p class="text-xs font-semibold uppercase tracking-[0.3em] text-slate-500 dark:text-slate-400">New</p>
+    <h1 class="mt-3 text-4xl font-semibold text-slate-900 dark:text-white sm:text-5xl">Create a recipe</h1>
+    <p class="mt-2 text-base text-slate-600 dark:text-slate-300">
+      Capture the flavor, the flow, and the tiny details that make it yours.
+    </p>
+  </div>
 
   <%= render "form", recipe: @recipe %>
 
-  <%= link_to "Back to recipes", recipes_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
+  <%= link_to "Back to recipes", recipes_path, class: "inline-flex rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900/80 dark:text-slate-100" %>
 </div>

@@ -42,7 +42,7 @@ export default class extends Controller {
     items.forEach((item, index) => {
       const stepLabel = item.querySelector("[data-step-label]")
       const positionInput = item.querySelector("input[name$='[position]']")
-      if (stepLabel) stepLabel.textContent = `Step ${index + 1}`
+      if (stepLabel) stepLabel.textContent = `${index + 1}`
       if (positionInput) positionInput.value = index + 1
     })
   }
