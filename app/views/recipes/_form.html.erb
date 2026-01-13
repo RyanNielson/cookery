@@ -63,38 +63,32 @@
     </template>
 
     <h2 class="font-semibold text-lg mt-6 mb-2">Instructions</h2>
-    <div data-nested-fields-target="instructions">
+    <ol class="space-y-3" data-nested-fields-target="instructions">
       <%= form.fields_for :instructions do |instruction_fields| %>
-        <div class="mb-3">
+        <li data-instruction-item>
           <div class="flex gap-2 items-end">
-            <div class="w-24">
-              <%= instruction_fields.label :position, "Step" %>
-              <%= instruction_fields.number_field :position, min: 1, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": instruction_fields.object.errors[:position].none?, "border-red-400 focus:outline-red-600": instruction_fields.object.errors[:position].any?}] %>
-            </div>
             <div class="flex-1">
-              <%= instruction_fields.label :body, "Instruction" %>
-              <%= instruction_fields.text_area :body, rows: 2, class: ["block shadow-sm rounded-md border px-3 py-2 mt-2 w-full", {"border-gray-400 focus:outline-blue-600": instruction_fields.object.errors[:body].none?, "border-red-400 focus:outline-red-600": instruction_fields.object.errors[:body].any?}] %>
+              <span class="block font-medium mb-1" data-step-label>Step</span>
+              <%= instruction_fields.hidden_field :position %>
+              <%= instruction_fields.text_area :body, rows: 2, class: ["block shadow-sm rounded-md border px-3 py-2 w-full", {"border-gray-400 focus:outline-blue-600": instruction_fields.object.errors[:body].none?, "border-red-400 focus:outline-red-600": instruction_fields.object.errors[:body].any?}] %>
             </div>
           </div>
-        </div>
+        </li>
       <% end %>
-    </div>
+    </ol>
     <button type="button" class="mt-2 rounded-md px-3 py-2 bg-gray-100 hover:bg-gray-50" data-action="nested-fields#addInstruction">Add instruction</button>
 
     <template data-nested-fields-target="instructionTemplate">
       <%= form.fields_for :instructions, Instruction.new, child_index: "NEW_RECORD" do |instruction_fields| %>
-        <div class="mb-3">
+        <li data-instruction-item>
           <div class="flex gap-2 items-end">
-            <div class="w-24">
-              <%= instruction_fields.label :position, "Step" %>
-              <%= instruction_fields.number_field :position, min: 1, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full" %>
-            </div>
             <div class="flex-1">
-              <%= instruction_fields.label :body, "Instruction" %>
-              <%= instruction_fields.text_area :body, rows: 2, class: "block shadow-sm rounded-md border px-3 py-2 mt-2 w-full" %>
+              <span class="block font-medium mb-1" data-step-label>Step</span>
+              <%= instruction_fields.hidden_field :position %>
+              <%= instruction_fields.text_area :body, rows: 2, class: "block shadow-sm rounded-md border px-3 py-2 w-full" %>
             </div>
           </div>
-        </div>
+        </li>
       <% end %>
     </template>
   </div>
