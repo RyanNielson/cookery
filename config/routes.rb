@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :grocery_lists, only: %i[index new create show destroy] do
+    resources :grocery_list_items, only: %i[create update]
+  end
   resources :recipes
   resource :session
   resources :passwords, param: :token

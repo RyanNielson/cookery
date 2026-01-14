@@ -1,0 +1,17 @@
+one_onion:
+  name: Red Onion
+  quantity: "1"
+  unit: "whole"
+  recipe: one
+
+one_garlic:
+  name: Garlic
+  quantity: "2"
+  unit: "cloves"
+  recipe: one
+
+three_onion:
+  name: Red Onion
+  quantity: "1/2"
+  unit: "whole"
+  recipe: three

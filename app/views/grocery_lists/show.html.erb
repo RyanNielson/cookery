@@ -1,0 +1,76 @@
+<% content_for :title, @grocery_list.name %>
+
+<div class="w-full space-y-10">
+  <% if notice.present? %>
+    <p class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700" id="notice">
+      <span class="inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+      <%= notice %>
+    </p>
+  <% end %>
+
+  <% if alert.present? %>
+    <p class="inline-flex items-center gap-2 rounded-full bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-700" id="alert">
+      <span class="inline-flex h-2 w-2 rounded-full bg-rose-500"></span>
+      <%= alert %>
+    </p>
+  <% end %>
+
+  <section class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+    <div>
+      <h1 class="text-4xl font-semibold leading-tight text-slate-900 dark:text-white sm:text-5xl"><%= @grocery_list.name %></h1>
+      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Check items off as you shop.</p>
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <%= link_to "Back to lists", grocery_lists_path, class: "rounded-full border border-slate-200/80 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900/80 dark:text-slate-100" %>
+      <%= button_to "Delete list", @grocery_list, method: :delete, class: "rounded-full border border-rose-200/80 bg-rose-50/80 px-5 py-2.5 text-sm font-semibold text-rose-600 shadow-sm transition hover:-translate-y-0.5 hover:border-rose-400 dark:border-rose-400/80 dark:bg-rose-500/10 dark:text-rose-200", data: { turbo_confirm: "Delete this grocery list?" } %>
+    </div>
+  </section>
+
+  <div class="grid gap-6 lg:grid-cols-2">
+    <section class="order-2 rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-sm lg:order-2 dark:border-slate-700/80 dark:bg-slate-900/80">
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Selected meals</h2>
+      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Recipes this list pulls from.</p>
+
+      <% if @selected_recipes.any? %>
+        <div class="mt-6 space-y-3">
+          <% @selected_recipes.each do |recipe| %>
+            <%= link_to recipe_path(recipe), class: "block rounded-2xl border border-slate-200/80 bg-white/70 px-4 py-3 text-sm font-semibold text-slate-800 transition hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-950/40 dark:text-slate-100" do %>
+              <span><%= recipe.name %></span>
+            <% end %>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-white/70 p-4 text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-950/40 dark:text-slate-400">No recipes linked to this list.</p>
+      <% end %>
+    </section>
+
+    <section class="order-1 rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-sm lg:order-1 dark:border-slate-700/80 dark:bg-slate-900/80">
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Grocery items</h2>
+      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Ingredients plus any extra items you added.</p>
+
+      <%= form_with model: [@grocery_list, GroceryListItem.new], class: "mt-6 grid gap-3 sm:grid-cols-3" do |form| %>
+        <div class="sm:col-span-2">
+          <%= form.label :name, "Add item", class: "text-xs font-semibold uppercase tracking-wide text-slate-400" %>
+          <%= form.text_field :name, class: "mt-2 w-full rounded-2xl border border-slate-200/80 bg-white px-4 py-2 text-sm text-slate-800 shadow-sm focus:border-[#ff7a59] focus:outline-none dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100" %>
+        </div>
+        <div>
+          <%= form.label :quantity_text, "Quantity", class: "text-xs font-semibold uppercase tracking-wide text-slate-400" %>
+          <%= form.text_field :quantity_text, class: "mt-2 w-full rounded-2xl border border-slate-200/80 bg-white px-4 py-2 text-sm text-slate-800 shadow-sm focus:border-[#ff7a59] focus:outline-none dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100" %>
+        </div>
+        <div class="sm:col-span-3">
+          <%= form.submit "Add to list", class: "rounded-full bg-[#ff7a59] px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-orange-200 transition hover:-translate-y-0.5 hover:bg-[#ff613c] dark:shadow-none" %>
+        </div>
+      <% end %>
+
+      <% if @grocery_list_items.any? %>
+        <div class="mt-6 space-y-3">
+          <% @grocery_list_items.each do |item| %>
+            <%= render partial: "grocery_list_items/grocery_list_item", locals: { grocery_list: @grocery_list, item: item } %>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-white/70 p-4 text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-950/40 dark:text-slate-400">No items yet.</p>
+      <% end %>
+    </section>
+  </div>
+</div>

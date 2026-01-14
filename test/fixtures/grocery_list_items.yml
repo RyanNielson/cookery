@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  grocery_list: one
+  name: Flour
+  quantity_text: 1 cup
+  purchased: false
+
+two:
+  grocery_list: two
+  name: Salt
+  quantity_text: Pinch
+  purchased: false

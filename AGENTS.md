@@ -37,5 +37,5 @@
 - Environment-specific settings are in `config/environments/` and `config/database.yml`.
 
 ## Implementation guidelines
-- When it makes sense and is possible, use rails generators like `bin/rails g scaffold` and `bin/rails generate controller` to ensure that files are organized as closely as possible to Rails best practices.
+- When it makes sense and is possible, use rails generators like `bin/rails g scaffold` and `bin/rails generate controller` to ensure that files are organized as closely as possible to Rails best practices. If the generator fails, output the command and let the user run manually before proceeding.
 - Before doing any coding, make a step by step plan covering how the request will be implemented and get approval.
