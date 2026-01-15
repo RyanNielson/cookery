@@ -30,15 +30,9 @@ class GroceryListsController < ApplicationController
     @selected_recipe_ids = selected_recipes.pluck(:id)
 
     @grocery_list = Current.user.grocery_lists.new(
-      name: grocery_list_params[:name].presence || "Grocery list",
+      name: grocery_list_params[:name],
       selected_recipe_ids: @selected_recipe_ids
     )
-
-    if selected_recipes.empty? && extra_items.empty?
-      @grocery_list.errors.add(:base, "Select at least one recipe or add an extra item.")
-      render :new, status: :unprocessable_entity
-      return
-    end
 
     if @grocery_list.save
       create_items_from_recipes(selected_recipes)
