@@ -4,7 +4,7 @@ class MealPlanEntriesController < ApplicationController
     @meal_plan_entry = @meal_plan.meal_plan_entries.new(meal_plan_entry_params)
 
     if @meal_plan_entry.save
-      redirect_to meal_plan_path(week: @meal_plan.starts_on), notice: "Meal added to the plan."
+      redirect_to meal_plan_path(week: @meal_plan.starts_on), status: :see_other# , notice: "Meal added to the plan."
     else
       @starts_on = @meal_plan.starts_on
       @entries = @meal_plan.meal_plan_entries.includes(:recipe).order(:planned_on, :created_at)
@@ -20,7 +20,7 @@ class MealPlanEntriesController < ApplicationController
     @meal_plan_entry = Current.user.meal_plan_entries.find(params.expect(:id))
     meal_plan = @meal_plan_entry.meal_plan
     @meal_plan_entry.destroy!
-    redirect_to meal_plan_path(week: meal_plan.starts_on), notice: "Meal removed from the plan.", status: :see_other
+    redirect_to meal_plan_path(week: meal_plan.starts_on), status: :see_other # , notice: "Meal removed from the plan."
   end
 
   private

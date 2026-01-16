@@ -55,7 +55,7 @@
             <% day_entries.each do |entry| %>
               <div class="flex items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white/70 px-3 py-2 text-sm text-slate-700 dark:border-slate-700/80 dark:bg-slate-950/40 dark:text-slate-100">
                 <%= link_to entry.recipe.name, recipe_path(entry.recipe), class: "font-semibold text-slate-900 hover:text-[#ff613c] dark:text-slate-100" %>
-                <%= button_to "Remove", meal_plan_entry_path(entry, week: @starts_on), method: :delete, class: "rounded-full border border-rose-200/80 bg-rose-50/80 px-3 py-1 text-xs font-semibold text-rose-600 transition hover:border-rose-400 dark:border-rose-400/80 dark:bg-rose-500/10 dark:text-rose-200", data: { turbo_confirm: "Remove this meal?" } %>
+                <%= button_to "Remove", meal_plan_entry_path(entry, week: @starts_on), method: :delete, class: "rounded-full border border-rose-200/80 bg-rose-50/80 px-3 py-1 text-xs font-semibold text-rose-600 transition hover:border-rose-400 hover:cursor-pointer dark:border-rose-400/80 dark:bg-rose-500/10 dark:text-rose-200", data: { turbo_confirm: "Remove this meal?" } %>
               </div>
             <% end %>
           <% else %>
@@ -71,7 +71,7 @@
               <% end %>
               <%= hidden_field_tag "meal_plan_entry[planned_on]", day %>
               <%= select_tag "meal_plan_entry[recipe_id]", options_from_collection_for_select(@recipes, :id, :name), include_blank: "Add a recipe...", class: "w-full rounded-2xl border border-slate-200/80 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-[#ff7a59] focus:outline-none dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100" %>
-              <%= form.submit "Add to day", class: "rounded-full bg-[#ff7a59] px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-orange-200 transition hover:-translate-y-0.5 hover:bg-[#ff613c] dark:shadow-none" %>
+              <%= form.submit "Add to day", class: "rounded-full bg-[#ff7a59] px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-orange-200 transition hover:-translate-y-0.5 hover:bg-[#ff613c] hover:cursor-pointer dark:shadow-none" %>
             <% end %>
           <% else %>
             <p class="text-sm text-slate-500 dark:text-slate-400">Add recipes to start planning.</p>
