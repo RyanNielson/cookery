@@ -1,0 +1,39 @@
+{
+  "ignored_warnings": [
+    {
+      "warning_type": "Dynamic Render Path",
+      "warning_code": 15,
+      "fingerprint": "6e0dd4870899b3c14c0a02e08d9ecd4375a66795ad2f61b8cc743d001358e182",
+      "check_name": "Render",
+      "message": "Render path contains parameter value",
+      "file": "app/views/recipes/show.html.erb",
+      "line": 11,
+      "link": "https://brakemanscanner.org/docs/warning_types/dynamic_render_path/",
+      "code": "render(action => Current.user.recipes.find(params.expect(:id)), { :locals => ({ :current => Current.user.recipes.find(params.expect(:id)) }) })",
+      "render_path": [
+        {
+          "type": "controller",
+          "class": "RecipesController",
+          "method": "show",
+          "line": 9,
+          "file": "app/controllers/recipes_controller.rb",
+          "rendered": {
+            "name": "recipes/show",
+            "file": "app/views/recipes/show.html.erb"
+          }
+        }
+      ],
+      "location": {
+        "type": "template",
+        "template": "recipes/show"
+      },
+      "user_input": "params.expect(:id)",
+      "confidence": "Weak",
+      "cwe_id": [
+        22
+      ],
+      "note": ""
+    }
+  ],
+  "brakeman_version": "7.1.2"
+}
