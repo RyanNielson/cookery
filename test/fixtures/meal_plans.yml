@@ -1,11 +1,9 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: Weekend list
-  selected_recipe_ids: "[]"
   user: one
+  starts_on: 2026-01-15
 
 two:
-  name: Weekday list
-  selected_recipe_ids: "[]"
   user: two
+  starts_on: 2026-01-15

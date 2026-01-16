@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_14_205813) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_16_030735) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.bigint "blob_id", null: false
     t.datetime "created_at", null: false
@@ -77,6 +77,24 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_14_205813) do
     t.index ["recipe_id"], name: "index_instructions_on_recipe_id"
   end
 
+  create_table "meal_plan_entries", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.integer "meal_plan_id", null: false
+    t.date "planned_on"
+    t.integer "recipe_id", null: false
+    t.datetime "updated_at", null: false
+    t.index ["meal_plan_id"], name: "index_meal_plan_entries_on_meal_plan_id"
+    t.index ["recipe_id"], name: "index_meal_plan_entries_on_recipe_id"
+  end
+
+  create_table "meal_plans", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.date "starts_on"
+    t.datetime "updated_at", null: false
+    t.integer "user_id", null: false
+    t.index ["user_id"], name: "index_meal_plans_on_user_id"
+  end
+
   create_table "recipes", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
@@ -109,6 +127,9 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_14_205813) do
   add_foreign_key "grocery_lists", "users"
   add_foreign_key "ingredients", "recipes"
   add_foreign_key "instructions", "recipes"
+  add_foreign_key "meal_plan_entries", "meal_plans"
+  add_foreign_key "meal_plan_entries", "recipes"
+  add_foreign_key "meal_plans", "users"
   add_foreign_key "recipes", "users"
   add_foreign_key "sessions", "users"
 end

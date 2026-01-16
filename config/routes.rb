@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
+  get "meal_plan_entries/create"
+  get "meal_plan_entries/destroy"
+  get "meal_plans/show"
   resources :grocery_lists, only: %i[index new create show destroy] do
     resources :grocery_list_items, only: %i[create update]
   end
+  resource :meal_plan, only: %i[show]
+  resources :meal_plan_entries, only: %i[create destroy]
   resources :recipes
   resource :session
   resources :passwords, param: :token

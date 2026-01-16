@@ -1,0 +1,84 @@
+<% content_for :title, "Meal plan" %>
+
+<div class="w-full space-y-10">
+  <% if notice.present? %>
+    <p class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700" id="notice">
+      <span class="inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+      <%= notice %>
+    </p>
+  <% end %>
+
+  <% if alert.present? %>
+    <p class="inline-flex items-center gap-2 rounded-full bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-700" id="alert">
+      <span class="inline-flex h-2 w-2 rounded-full bg-rose-500"></span>
+      <%= alert %>
+    </p>
+  <% end %>
+
+  <% if @meal_plan_entry&.errors&.any? %>
+    <div class="rounded-3xl border border-rose-200/80 bg-rose-50/80 p-5 text-sm text-rose-700">
+      <p class="font-semibold"><%= pluralize(@meal_plan_entry.errors.count, "error") %> stopped this meal from saving:</p>
+      <ul class="mt-2 list-disc space-y-1 pl-5">
+        <% @meal_plan_entry.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <section class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+    <div>
+      <h1 class="text-4xl font-semibold leading-tight text-slate-900 dark:text-white sm:text-5xl">Meal plan</h1>
+      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">
+        Week of <%= @starts_on.strftime("%B %-d") %> – <%= (@starts_on + 6.days).strftime("%B %-d") %>
+      </p>
+    </div>
+    <div class="flex flex-wrap gap-3">
+      <%= link_to "This week", meal_plan_path, class: "rounded-full border border-slate-200/80 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900/80 dark:text-slate-100" %>
+      <%= link_to "Prev week", meal_plan_path(week: @starts_on - 7.days), class: "rounded-full border border-slate-200/80 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900/80 dark:text-slate-100" %>
+      <%= link_to "Next week", meal_plan_path(week: @starts_on + 7.days), class: "rounded-full border border-slate-200/80 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900/80 dark:text-slate-100" %>
+      <%= link_to "Recipes", recipes_path, class: "rounded-full bg-[#ff7a59] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-200 transition hover:-translate-y-0.5 hover:bg-[#ff613c] dark:shadow-none" %>
+    </div>
+  </section>
+
+  <div class="grid gap-6 lg:grid-cols-2 xl:grid-cols-4">
+    <% @week_days.each do |day| %>
+      <div class="rounded-3xl border border-slate-200/80 bg-white/80 p-5 shadow-sm dark:border-slate-700/80 dark:bg-slate-900/80">
+        <div class="flex items-baseline justify-between gap-4">
+          <h2 class="text-lg font-semibold text-slate-900 dark:text-white"><%= day.strftime("%A") %></h2>
+          <span class="text-xs font-semibold uppercase tracking-wide text-slate-400"><%= day.strftime("%b %-d") %></span>
+        </div>
+
+        <div class="mt-4 space-y-3">
+          <% day_entries = @entries_by_day[day] || [] %>
+          <% if day_entries.any? %>
+            <% day_entries.each do |entry| %>
+              <div class="flex items-center justify-between gap-3 rounded-2xl border border-slate-200/80 bg-white/70 px-3 py-2 text-sm text-slate-700 dark:border-slate-700/80 dark:bg-slate-950/40 dark:text-slate-100">
+                <%= link_to entry.recipe.name, recipe_path(entry.recipe), class: "font-semibold text-slate-900 hover:text-[#ff613c] dark:text-slate-100" %>
+                <%= button_to "Remove", meal_plan_entry_path(entry, week: @starts_on), method: :delete, class: "rounded-full border border-rose-200/80 bg-rose-50/80 px-3 py-1 text-xs font-semibold text-rose-600 transition hover:border-rose-400 dark:border-rose-400/80 dark:bg-rose-500/10 dark:text-rose-200", data: { turbo_confirm: "Remove this meal?" } %>
+              </div>
+            <% end %>
+          <% else %>
+            <p class="rounded-2xl border border-dashed border-slate-200/80 bg-white/60 p-3 text-sm text-slate-500 dark:border-slate-700/80 dark:bg-slate-950/30 dark:text-slate-400">Nothing planned yet.</p>
+          <% end %>
+        </div>
+
+        <div class="mt-4">
+          <% if @recipes.any? %>
+            <%= form_with url: meal_plan_entries_path, method: :post, class: "flex flex-col gap-2" do |form| %>
+              <% if @meal_plan.present? %>
+                <%= hidden_field_tag :meal_plan_id, @meal_plan.id %>
+              <% end %>
+              <%= hidden_field_tag "meal_plan_entry[planned_on]", day %>
+              <%= select_tag "meal_plan_entry[recipe_id]", options_from_collection_for_select(@recipes, :id, :name), include_blank: "Add a recipe...", class: "w-full rounded-2xl border border-slate-200/80 bg-white px-3 py-2 text-sm text-slate-700 shadow-sm focus:border-[#ff7a59] focus:outline-none dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100" %>
+              <%= form.submit "Add to day", class: "rounded-full bg-[#ff7a59] px-4 py-2 text-xs font-semibold text-white shadow-sm shadow-orange-200 transition hover:-translate-y-0.5 hover:bg-[#ff613c] dark:shadow-none" %>
+            <% end %>
+          <% else %>
+            <p class="text-sm text-slate-500 dark:text-slate-400">Add recipes to start planning.</p>
+            <%= link_to "Create a recipe", new_recipe_path, class: "mt-2 inline-flex rounded-full border border-slate-200/80 bg-white/80 px-3 py-1.5 text-xs font-semibold text-slate-700 transition hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900/80 dark:text-slate-100" %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

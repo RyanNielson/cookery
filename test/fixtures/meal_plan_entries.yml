@@ -1,0 +1,11 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  meal_plan: one
+  recipe: one
+  planned_on: 2026-01-15
+
+two:
+  meal_plan: two
+  recipe: two
+  planned_on: 2026-01-15
