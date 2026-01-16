@@ -1,25 +1,20 @@
 class RecipesController < ApplicationController
   before_action :set_recipe, only: %i[ show edit update destroy ]
 
-  # GET /recipes
   def index
     @recipes = Current.user.recipes.order(created_at: :desc)
   end
 
-  # GET /recipes/1
   def show
   end
 
-  # GET /recipes/new
   def new
-    @recipe = Current.user.recipes.build
+    @recipe = Recipe.new
   end
 
-  # GET /recipes/1/edit
   def edit
   end
 
-  # POST /recipes
   def create
     @recipe = Current.user.recipes.build(recipe_params)
 
@@ -30,7 +25,6 @@ class RecipesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /recipes/1
   def update
     purge_image if params.dig(:recipe, :remove_image) == "1"
 
@@ -41,7 +35,6 @@ class RecipesController < ApplicationController
     end
   end
 
-  # DELETE /recipes/1
   def destroy
     @recipe.destroy!
     redirect_to recipes_path, notice: "Recipe was successfully destroyed.", status: :see_other

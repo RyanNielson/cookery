@@ -22,14 +22,14 @@ class GroceryListsControllerTest < ActionDispatch::IntegrationTest
       assert_difference("GroceryListItem.count", 3) do
         post grocery_lists_url, params: {
           grocery_list: { name: "Weekend run" },
-          recipe_ids: [recipes(:one).id, recipes(:three).id],
+          recipe_ids: [ recipes(:one).id, recipes(:three).id ],
           extra_items: "Paper towels"
         }
       end
     end
 
     grocery_list = GroceryList.last
-    assert_equal [recipes(:one).id, recipes(:three).id].sort, grocery_list.selected_recipe_ids.sort
+    assert_equal [ recipes(:one).id, recipes(:three).id ].sort, grocery_list.selected_recipe_ids.sort
 
     onion_item = grocery_list.grocery_list_items.find_by(name: "Red Onion")
     assert onion_item
@@ -46,7 +46,7 @@ class GroceryListsControllerTest < ActionDispatch::IntegrationTest
       assert_difference("GroceryListItem.count", 3) do
         post grocery_lists_url, params: {
           grocery_list: { name: "Planned week" },
-          meal_plan_ids: [meal_plan.id],
+          meal_plan_ids: [ meal_plan.id ],
           extra_items: "Paper towels"
         }
       end

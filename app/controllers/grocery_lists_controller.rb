@@ -14,7 +14,7 @@ class GroceryListsController < ApplicationController
     recipes_by_id = Current.user.recipes.where(id: recipe_id_counts.keys).index_by(&:id)
     @selected_recipes_with_counts = recipe_id_counts.map do |recipe_id, count|
       recipe = recipes_by_id[recipe_id]
-      [recipe, count] if recipe.present?
+      [ recipe, count ] if recipe.present?
     end.compact
     @grocery_list_items = @grocery_list.grocery_list_items.order(:name)
   end
@@ -111,6 +111,6 @@ class GroceryListsController < ApplicationController
     end
 
     def format_quantity(ingredient)
-      [ingredient.quantity, ingredient.unit].compact_blank.join(" ").presence || "Amount not specified"
+      [ ingredient.quantity, ingredient.unit ].compact_blank.join(" ").presence || "Amount not specified"
     end
 end
