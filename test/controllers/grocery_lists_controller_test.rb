@@ -17,6 +17,14 @@ class GroceryListsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "should preselect meal plan on new grocery list" do
+    meal_plan = meal_plans(:one)
+
+    get new_grocery_list_url(meal_plan_ids: [ meal_plan.id ])
+    assert_response :success
+    assert_select "input[name='meal_plan_ids[]'][value='#{meal_plan.id}'][checked]"
+  end
+
   test "should create grocery list with recipes and extras" do
     assert_difference("GroceryList.count") do
       assert_difference("GroceryListItem.count", 3) do

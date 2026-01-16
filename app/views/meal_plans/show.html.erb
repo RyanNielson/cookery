@@ -37,6 +37,8 @@
       <%= link_to "This week", meal_plan_path, class: "rounded-full border border-slate-200/80 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900/80 dark:text-slate-100" %>
       <%= link_to "Prev week", meal_plan_path(week: @starts_on - 7.days), class: "rounded-full border border-slate-200/80 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900/80 dark:text-slate-100" %>
       <%= link_to "Next week", meal_plan_path(week: @starts_on + 7.days), class: "rounded-full border border-slate-200/80 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900/80 dark:text-slate-100" %>
+      <% grocery_list_params = @meal_plan ? { meal_plan_ids: [ @meal_plan.id ] } : {} %>
+      <%= link_to "Build grocery list", new_grocery_list_path(grocery_list_params), class: "rounded-full border border-slate-200/80 bg-white/80 px-5 py-2.5 text-sm font-semibold text-slate-700 shadow-sm transition hover:-translate-y-0.5 hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900/80 dark:text-slate-100" %>
       <%= link_to "Recipes", recipes_path, class: "rounded-full bg-[#ff7a59] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-200 transition hover:-translate-y-0.5 hover:bg-[#ff613c] dark:shadow-none" %>
     </div>
   </section>

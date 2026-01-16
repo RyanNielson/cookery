@@ -21,21 +21,21 @@ class GroceryListsController < ApplicationController
 
   # GET /grocery_lists/new
   def new
-    load_recipes
-    load_meal_plans
     @grocery_list = Current.user.grocery_lists.new
     @selected_recipe_ids = []
-    @selected_meal_plan_ids = []
+    @selected_meal_plan_ids = Array(params[:meal_plan_ids]).reject(&:blank?)
     @extra_items_text = ""
+    load_recipes
+    load_meal_plans(@selected_meal_plan_ids)
   end
 
   # POST /grocery_lists
   def create
-    load_recipes
-    load_meal_plans
     @selected_recipe_ids = Array(params[:recipe_ids]).reject(&:blank?)
     @selected_meal_plan_ids = Array(params[:meal_plan_ids]).reject(&:blank?)
     @extra_items_text = params[:extra_items].to_s
+    load_recipes
+    load_meal_plans(@selected_meal_plan_ids)
     extra_items = parse_extra_items(@extra_items_text)
     selected_recipes = @recipes.where(id: @selected_recipe_ids)
     @selected_recipe_ids = selected_recipes.pluck(:id)
@@ -76,12 +76,16 @@ class GroceryListsController < ApplicationController
       @recipes = Current.user.recipes.order(:name)
     end
 
-    def load_meal_plans
+    def load_meal_plans(selected_meal_plan_ids = [])
+      selected_meal_plan_ids = Array(selected_meal_plan_ids).reject(&:blank?)
       week_start = Date.current.beginning_of_week(:monday)
-      @meal_plans = Current.user.meal_plans
-        .includes(:meal_plan_entries)
-        .where("starts_on >= ?", week_start)
-        .order(starts_on: :desc)
+      scope = Current.user.meal_plans.includes(:meal_plan_entries)
+      scope = if selected_meal_plan_ids.any?
+        scope.where("starts_on >= ? OR id IN (?)", week_start, selected_meal_plan_ids)
+      else
+        scope.where("starts_on >= ?", week_start)
+      end
+      @meal_plans = scope.order(starts_on: :desc)
     end
 
     def grocery_list_params
