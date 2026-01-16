@@ -36,7 +36,7 @@
     </div>
   <% end %>
 
-  <%= form_with model: @grocery_list, url: grocery_lists_path, method: :post, class: "grid gap-6 lg:grid-cols-2" do |form| %>
+  <%= form_with model: @grocery_list, url: grocery_lists_path, method: :post, class: "grid gap-6 lg:grid-cols-3" do |form| %>
     <section class="rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-sm dark:border-slate-700/80 dark:bg-slate-900/80">
       <h2 class="text-xl font-semibold text-slate-900 dark:text-white">List details</h2>
 
@@ -50,6 +50,32 @@
         <p class="mt-2 text-xs text-slate-500 dark:text-slate-400">One item per line (e.g., paper towels).</p>
         <%= text_area_tag :extra_items, @extra_items_text, rows: 5, class: "mt-2 w-full rounded-2xl border border-slate-200/80 bg-white px-4 py-2.5 text-sm text-slate-800 shadow-sm focus:border-[#ff7a59] focus:outline-none dark:border-slate-700 dark:bg-slate-950/60 dark:text-slate-100" %>
       </div>
+    </section>
+
+    <section class="rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-sm dark:border-slate-700/80 dark:bg-slate-900/80">
+      <h2 class="text-xl font-semibold text-slate-900 dark:text-white">Plan picks</h2>
+      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Bring in recipes from your weekly plans. Only current or upcoming weeks are listed.</p>
+
+      <% if @meal_plans.any? %>
+        <div class="mt-6 space-y-3">
+          <% @meal_plans.each do |meal_plan| %>
+            <label class="flex items-start gap-3 rounded-2xl border border-slate-200/80 bg-white/70 px-4 py-3 text-sm font-medium text-slate-800 transition hover:border-[#ff7a59] dark:border-slate-700/80 dark:bg-slate-950/40 dark:text-slate-100">
+              <%= check_box_tag "meal_plan_ids[]", meal_plan.id, @selected_meal_plan_ids.include?(meal_plan.id.to_s), class: "mt-1 h-4 w-4 rounded border-slate-300 text-[#ff7a59] focus:ring-[#ff7a59]" %>
+              <span>
+                <span class="block text-base font-semibold">
+                  Week of <%= meal_plan.starts_on.strftime("%B %-d") %> – <%= (meal_plan.starts_on + 6.days).strftime("%B %-d") %>
+                </span>
+                <span class="mt-1 block text-xs font-semibold uppercase tracking-wide text-slate-400">
+                  <%= pluralize(meal_plan.meal_plan_entries.size, "meal") %>
+                </span>
+              </span>
+            </label>
+          <% end %>
+        </div>
+      <% else %>
+        <p class="mt-6 rounded-2xl border border-dashed border-slate-300 bg-white/70 p-4 text-sm text-slate-500 dark:border-slate-700 dark:bg-slate-950/40 dark:text-slate-400">No current or upcoming plans yet. Add a plan to pull recipes in.</p>
+        <%= link_to "Plan meals", meal_plan_path, class: "mt-4 inline-flex rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900 dark:text-slate-100" %>
+      <% end %>
     </section>
 
     <section class="rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-sm dark:border-slate-700/80 dark:bg-slate-900/80">
@@ -75,7 +101,7 @@
       <% end %>
     </section>
 
-    <div class="lg:col-span-2 flex flex-wrap gap-3">
+    <div class="lg:col-span-3 flex flex-wrap gap-3">
       <%= form.submit "Create grocery list", class: "rounded-full bg-[#ff7a59] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-200 transition hover:-translate-y-0.5 hover:bg-[#ff613c] dark:shadow-none" %>
     </div>
   <% end %>
