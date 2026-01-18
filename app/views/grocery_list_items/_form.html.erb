@@ -28,7 +28,7 @@
 
   <div class="my-5 flex items-center gap-2">
     <%= form.label :purchased %>
-    <%= form.checkbox :purchased, class: ["block shadow-sm rounded-md border order-first h-5 w-5", {"border-gray-400 focus:outline-blue-600": grocery_list_item.errors[:purchased].none?, "border-red-400 focus:outline-red-600": grocery_list_item.errors[:purchased].any?}] %>
+    <%= form.checkbox :purchased, class: ["block shadow-sm rounded-md border order-first h-5 w-5 cursor-pointer", {"border-gray-400 focus:outline-blue-600": grocery_list_item.errors[:purchased].none?, "border-red-400 focus:outline-red-600": grocery_list_item.errors[:purchased].any?}] %>
   </div>
 
   <div class="inline">
