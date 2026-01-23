@@ -138,4 +138,12 @@
   .dark .border-black {
     border-color: #f5f5f5;
   }
+
+  .dark .hover\:text-black:hover {
+    color: #0b0b0b;
+  }
+
+  .dark .hover\:bg-neutral-200:hover {
+    background-color: #f5f5f5;
+  }
 }
