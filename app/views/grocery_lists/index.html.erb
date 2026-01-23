@@ -1,43 +1,42 @@
 <% content_for :title, "Grocery lists" %>
 
-<div class="w-full space-y-10">
+<div class="w-full space-y-8">
   <% if notice.present? %>
-    <p class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700" id="notice">
-      <span class="inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+    <p class="inline-flex items-center gap-2 rounded-none border-2 border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-700" id="notice">
+      <span class="inline-flex h-2 w-2 rounded-none bg-black"></span>
       <%= notice %>
     </p>
   <% end %>
 
-  <section class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+  <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
     <div>
-      <h1 class="text-4xl font-semibold leading-tight text-slate-900 dark:text-white sm:text-5xl">Grocery lists</h1>
-      <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Saved lists you can share and check off.</p>
+      <h1 class="text-4xl font-semibold leading-tight text-black sm:text-5xl">Grocery lists</h1>
     </div>
     <div class="flex flex-wrap gap-3">
-      <%= link_to "New grocery list", new_grocery_list_path, class: "rounded-full bg-[#ff7a59] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-200 transition hover:-translate-y-0.5 hover:bg-[#ff613c] dark:shadow-none" %>
+      <%= link_to "New grocery list", new_grocery_list_path, class: "inline-flex items-center rounded-none bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800" %>
     </div>
   </section>
 
-  <div class="grid gap-6 lg:grid-cols-2">
+  <div class="grid gap-4 lg:grid-cols-2 animate-stagger">
     <% if @grocery_lists.any? %>
       <% @grocery_lists.each do |grocery_list| %>
-        <div class="rounded-3xl border border-slate-200/80 bg-white/80 p-6 shadow-sm transition hover:-translate-y-0.5 dark:border-slate-700/80 dark:bg-slate-900/80">
-          <h2 class="text-xl font-semibold text-slate-900 dark:text-white"><%= grocery_list.name %></h2>
-          <div class="mt-3 flex flex-wrap gap-4 text-xs font-semibold uppercase tracking-wide text-slate-400">
+        <div class="rounded-none border-2 border-neutral-200 bg-white p-4 transition hover:-translate-y-0.5">
+          <h2 class="text-xl font-semibold text-black"><%= grocery_list.name %></h2>
+          <div class="mt-3 flex flex-wrap gap-4 text-xs font-semibold uppercase tracking-wide text-neutral-400">
             <span><%= pluralize(grocery_list.grocery_list_items.size, "item") %></span>
             <span><%= pluralize(Array(grocery_list.selected_recipe_ids).size, "meal") %></span>
           </div>
           <div class="mt-6 flex flex-wrap gap-3">
-            <%= link_to "View list", grocery_list_path(grocery_list), class: "rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 text-xs font-semibold text-slate-700 transition hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900 dark:text-slate-100" %>
-            <%= button_to "Delete", grocery_list_path(grocery_list), method: :delete, class: "rounded-full border border-rose-200/80 bg-rose-50/80 px-4 py-2 text-xs font-semibold text-rose-600 transition hover:border-rose-400 dark:border-rose-400/80 dark:bg-rose-500/10 dark:text-rose-200", data: { turbo_confirm: "Delete this grocery list?" } %>
+            <%= link_to "View list", grocery_list_path(grocery_list), class: "rounded-none border-2 border-neutral-300 bg-white px-4 py-2 text-xs font-semibold text-neutral-700 transition hover:border-black hover:text-black" %>
+            <%= button_to "Delete", grocery_list_path(grocery_list), method: :delete, class: "rounded-none border-2 border-black bg-black px-4 py-2 text-xs font-semibold text-white transition hover:bg-neutral-800", data: { turbo_confirm: "Delete this grocery list?" } %>
           </div>
         </div>
       <% end %>
     <% else %>
-      <div class="rounded-3xl border border-dashed border-slate-300 bg-white/70 p-10 text-center shadow-sm dark:border-slate-700 dark:bg-slate-950/60">
-        <p class="text-lg font-semibold text-slate-800 dark:text-slate-100">No grocery lists yet.</p>
-        <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Create a list from your favorite recipes.</p>
-        <%= link_to "Create your first list", new_grocery_list_path, class: "mt-6 inline-flex rounded-full bg-[#ff7a59] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-200 transition hover:-translate-y-0.5 hover:bg-[#ff613c] dark:shadow-none" %>
+      <div class="rounded-none border-2 border-dashed border-neutral-300 bg-neutral-50 p-8 text-center">
+        <p class="text-lg font-semibold text-neutral-900">No grocery lists yet.</p>
+        <p class="mt-2 text-sm text-neutral-500">Create a list from your favorite recipes.</p>
+        <%= link_to "Create your first list", new_grocery_list_path, class: "mt-6 inline-flex items-center rounded-none bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800" %>
       </div>
     <% end %>
   </div>

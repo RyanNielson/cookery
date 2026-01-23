@@ -1,15 +1,20 @@
 <% content_for :title, "Showing grocery list item" %>
 
-<div class="md:w-2/3 w-full">
+<div class="w-full space-y-6">
   <% if notice.present? %>
-    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-md inline-block" id="notice"><%= notice %></p>
+    <p class="inline-flex items-center gap-2 rounded-none border-2 border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-700" id="notice">
+      <span class="inline-flex h-2 w-2 rounded-none bg-black"></span>
+      <%= notice %>
+    </p>
   <% end %>
 
-  <h1 class="font-bold text-4xl">Showing grocery list item</h1>
+  <h1 class="text-3xl font-semibold text-black">Showing grocery list item</h1>
 
   <%= render @grocery_list_item %>
 
-  <%= link_to "Edit this grocery list item", edit_grocery_list_item_path(@grocery_list_item), class: "w-full sm:w-auto text-center rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= link_to "Back to grocery list items", grocery_list_items_path, class: "w-full sm:w-auto text-center mt-2 sm:mt-0 sm:ml-2 rounded-md px-3.5 py-2.5 bg-gray-100 hover:bg-gray-50 inline-block font-medium" %>
-  <%= button_to "Destroy this grocery list item", @grocery_list_item, method: :delete, form_class: "sm:inline-block mt-2 sm:mt-0 sm:ml-2", class: "w-full rounded-md px-3.5 py-2.5 text-white bg-red-600 hover:bg-red-500 font-medium cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+  <div class="flex flex-wrap gap-3">
+    <%= link_to "Edit this grocery list item", edit_grocery_list_item_path(@grocery_list_item), class: "rounded-none border-2 border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:border-black hover:text-black" %>
+    <%= link_to "Back to grocery list items", grocery_list_items_path, class: "rounded-none border-2 border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:border-black hover:text-black" %>
+    <%= button_to "Destroy this grocery list item", @grocery_list_item, method: :delete, class: "rounded-none bg-black px-4 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800 cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
+  </div>
 </div>

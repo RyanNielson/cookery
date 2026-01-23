@@ -1,3 +1,75 @@
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    font-family: "Avenir Next", "Gill Sans", "Trebuchet MS", sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: "Iowan Old Style", "Palatino Linotype", "Book Antiqua", Palatino, serif;
+    letter-spacing: -0.01em;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@layer utilities {
+  .animate-fade-in {
+    animation: fade-in 600ms ease-out both;
+  }
+
+  .animate-stagger > * {
+    animation: rise-in 600ms ease-out both;
+  }
+
+  .animate-stagger > *:nth-child(1) {
+    animation-delay: 0ms;
+  }
+
+  .animate-stagger > *:nth-child(2) {
+    animation-delay: 80ms;
+  }
+
+  .animate-stagger > *:nth-child(3) {
+    animation-delay: 160ms;
+  }
+
+  .animate-stagger > *:nth-child(4) {
+    animation-delay: 240ms;
+  }
+
+  .animate-stagger > *:nth-child(5) {
+    animation-delay: 320ms;
+  }
+
+  .animate-stagger > *:nth-child(6) {
+    animation-delay: 400ms;
+  }
+}

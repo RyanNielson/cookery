@@ -1,17 +1,23 @@
-<div class="mx-auto md:w-2/3 w-full">
+<div class="mx-auto w-full max-w-lg space-y-8">
   <% if alert = flash[:alert] %>
-    <p class="py-2 px-3 bg-red-50 mb-5 text-red-500 font-medium rounded-lg inline-block" id="alert"><%= alert %></p>
+    <p class="inline-flex items-center gap-2 rounded-none border-2 border-black bg-neutral-900 px-4 py-2 text-sm font-semibold text-white" id="alert">
+      <span class="inline-flex h-2 w-2 rounded-none bg-white"></span>
+      <%= alert %>
+    </p>
   <% end %>
 
-  <h1 class="font-bold text-4xl">Forgot your password?</h1>
+  <div>
+    <h1 class="text-4xl font-semibold text-black">Forgot your password?</h1>
+    <p class="mt-2 text-sm text-neutral-500">We'll send a reset link to the email on file.</p>
+  </div>
 
-  <%= form_with url: passwords_path, class: "contents" do |form| %>
-    <div class="my-5">
-      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "block shadow-sm rounded-md border border-gray-400 focus:outline-solid focus:outline-blue-600 px-3 py-2 mt-2 w-full" %>
+  <%= form_with url: passwords_path, class: "space-y-4" do |form| %>
+    <div>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "mt-2 block w-full rounded-none border-2 border-neutral-300 px-3 py-2 focus:border-black focus:outline-none focus:ring-2 focus:ring-black/10" %>
     </div>
 
     <div class="inline">
-      <%= form.submit "Email reset instructions", class: "w-full sm:w-auto text-center rounded-lg px-3.5 py-2.5 bg-blue-600 hover:bg-blue-500 text-white inline-block font-medium cursor-pointer" %>
+      <%= form.submit "Email reset instructions", class: "rounded-none bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800 cursor-pointer" %>
     </div>
   <% end %>
 </div>

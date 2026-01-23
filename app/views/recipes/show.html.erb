@@ -2,8 +2,8 @@
 
 <div class="w-full space-y-8">
   <% if notice.present? %>
-    <p class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700" id="notice">
-      <span class="inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+    <p class="inline-flex items-center gap-2 rounded-none border-2 border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-700" id="notice">
+      <span class="inline-flex h-2 w-2 rounded-none bg-black"></span>
       <%= notice %>
     </p>
   <% end %>
@@ -11,8 +11,8 @@
   <%= render @recipe %>
 
   <div class="flex flex-wrap gap-3">
-    <%= link_to "Edit recipe", edit_recipe_path(@recipe), class: "rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900/80 dark:text-slate-100" %>
-    <%= link_to "Back to recipes", recipes_path, class: "rounded-full border border-slate-200/80 bg-white/80 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:border-[#ff7a59] hover:text-[#ff613c] dark:border-slate-700/80 dark:bg-slate-900/80 dark:text-slate-100" %>
-    <%= button_to "Delete recipe", @recipe, method: :delete, class: "rounded-full bg-[#ff7a59] px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-orange-200 transition hover:bg-[#ff613c] cursor-pointer dark:shadow-none", data: { turbo_confirm: "Are you sure?" } %>
+    <%= link_to "Edit recipe", edit_recipe_path(@recipe), class: "rounded-none border-2 border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:border-black hover:text-black" %>
+    <%= link_to "Back to recipes", recipes_path, class: "rounded-none border-2 border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:border-black hover:text-black" %>
+    <%= button_to "Delete recipe", @recipe, method: :delete, class: "rounded-none bg-black px-4 py-2 text-sm font-semibold text-white transition hover:bg-neutral-800 cursor-pointer", data: { turbo_confirm: "Are you sure?" } %>
   </div>
 </div>

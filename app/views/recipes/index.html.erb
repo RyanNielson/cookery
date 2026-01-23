@@ -1,30 +1,30 @@
 <% content_for :title, "Recipes" %>
 
-<div class="w-full space-y-10">
+<div class="w-full space-y-8">
   <% if notice.present? %>
-    <p class="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-4 py-2 text-sm font-semibold text-emerald-700" id="notice">
-      <span class="inline-flex h-2 w-2 rounded-full bg-emerald-500"></span>
+    <p class="inline-flex items-center gap-2 rounded-none border-2 border-neutral-300 bg-white px-4 py-2 text-sm font-semibold text-neutral-700" id="notice">
+      <span class="inline-flex h-2 w-2 rounded-none bg-black"></span>
       <%= notice %>
     </p>
   <% end %>
 
-  <section class="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+  <section class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
     <div>
-      <h1 class="text-4xl font-semibold leading-tight text-slate-900 dark:text-white sm:text-5xl">Recipes</h1>
+      <h1 class="text-4xl font-semibold leading-tight text-black sm:text-5xl">Recipes</h1>
     </div>
     <div class="flex flex-wrap gap-3">
-      <%= link_to "New recipe", new_recipe_path, class: "rounded-full bg-[#ff7a59] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-200 transition hover:-translate-y-0.5 hover:bg-[#ff613c] dark:shadow-none" %>
+      <%= link_to "New recipe", new_recipe_path, class: "inline-flex items-center rounded-none bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800" %>
     </div>
   </section>
 
-  <div id="recipes" class="grid gap-6 lg:grid-cols-2">
+  <div id="recipes" class="grid gap-4 lg:grid-cols-2 animate-stagger">
     <% if @recipes.any? %>
       <%= render partial: "recipe_card", collection: @recipes, as: :recipe %>
     <% else %>
-      <div class="rounded-3xl border border-dashed border-slate-300 bg-white/70 p-10 text-center shadow-sm dark:border-slate-700 dark:bg-slate-950/60">
-        <p class="text-lg font-semibold text-slate-800 dark:text-slate-100">No recipes yet.</p>
-        <p class="mt-2 text-sm text-slate-500 dark:text-slate-400">Start with a favorite weeknight staple and build from there.</p>
-        <%= link_to "Create your first recipe", new_recipe_path, class: "mt-6 inline-flex rounded-full bg-[#ff7a59] px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-200 transition hover:-translate-y-0.5 hover:bg-[#ff613c] dark:shadow-none" %>
+      <div class="rounded-none border-2 border-dashed border-neutral-300 bg-neutral-50 p-8 text-center">
+        <p class="text-lg font-semibold text-neutral-900">No recipes yet.</p>
+        <p class="mt-2 text-sm text-neutral-500">Start with a favorite weeknight staple and build from there.</p>
+        <%= link_to "Create your first recipe", new_recipe_path, class: "mt-6 inline-flex items-center rounded-none bg-black px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-neutral-800" %>
       </div>
     <% end %>
   </div>
