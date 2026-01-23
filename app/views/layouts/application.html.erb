@@ -18,13 +18,23 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <script>
+      (() => {
+        const stored = localStorage.getItem("theme");
+        const theme = stored || "system";
+        const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+        const shouldUseDark = theme === "dark" || (theme === "system" && prefersDark);
+        document.documentElement.classList.toggle("dark", shouldUseDark);
+      })();
+    </script>
+
     <%# Includes all stylesheet files in app/assets/stylesheets %>
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <%= turbo_refreshes_with method: :morph, scroll: :preserve %>
   </head>
 
-  <body class="min-h-full bg-white text-neutral-900">
+  <body class="min-h-full bg-white text-neutral-900" data-controller="theme">
     <div class="relative">
       <header class="border-b-2 border-neutral-200 bg-white">
         <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 px-4 py-6">
@@ -36,13 +46,24 @@
           <nav class="flex flex-wrap items-center gap-4">
             <% nav_link_class = ->(path) do
               base_classes = "border-b-2 border-transparent text-xs font-semibold uppercase tracking-[0.2em] text-neutral-600 transition hover:text-black"
-              active_classes = "border-black text-black"
+              active_classes = "border-black text-black underline underline-offset-4 decoration-2"
               [base_classes, (active_classes if current_page?(path))].compact.join(" ")
             end %>
             <%= link_to "Recipes", recipes_path, class: nav_link_class.call(recipes_path) %>
             <%= link_to "Meal plans", meal_plan_path, class: nav_link_class.call(meal_plan_path) %>
             <%= link_to "Grocery lists", grocery_lists_path, class: nav_link_class.call(grocery_lists_path) %>
           </nav>
+          <details class="relative">
+            <summary class="cursor-pointer list-none border-2 border-neutral-300 bg-white px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-700 transition hover:border-black hover:text-black [&::-webkit-details-marker]:hidden">
+              Theme
+            </summary>
+            <div class="absolute right-0 z-10 mt-2 w-40 border-2 border-neutral-300 bg-white">
+              <% theme_button_class = "flex w-full cursor-pointer items-center justify-between px-3 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-neutral-700 transition hover:bg-neutral-100 aria-pressed:bg-neutral-100" %>
+              <button type="button" class="<%= theme_button_class %>" data-theme-value="system" data-theme-target="option" data-action="theme#set">System</button>
+              <button type="button" class="<%= theme_button_class %>" data-theme-value="light" data-theme-target="option" data-action="theme#set">Light</button>
+              <button type="button" class="<%= theme_button_class %>" data-theme-value="dark" data-theme-target="option" data-action="theme#set">Dark</button>
+            </div>
+          </details>
         </div>
       </header>
 
